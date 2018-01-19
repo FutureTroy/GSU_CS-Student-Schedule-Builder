@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>CS / Schedule Express</title>
+  <!-- Bootstrap core CSS-->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Page level plugin CSS-->
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet">
+  <script type="text/javascript">
+    var crnString = <?= $init['crnString']; ?>
+  </script>
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.html">CS / Schedule Express</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="coursesearch.html">
+            <i class="fa fa-fw fa-list-alt"></i>
+            <span class="nav-link-text">Schedule Builder</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="schedule.html">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">Overview/View Schedule</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="export.html">
+            <i class="fa fa-fw fa-list"></i>
+            <span class="nav-link-text">Easy Export</span>
+          </a>
+        </li>
+        
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      
+      <div class="card mb-3">
+        <div class="card-header">
+          <h3><i class="fa fa-list"> </i> Exported Schedule View</h3></div>
+        <div class="card-body">
+          <div class="table-responsive" id="exported">
+            
+              
+            
+            <script type="text/javascript">
+              crnString = "";
+              userStorage = window.localStorage;
+              var tbl = document.getElementById("exported");
+              var table = "<table class=\"table table-bordered\" width=\"100%\" cellspacing=\"0\"><thead><tr><th>CRN</th>" +
+                  "<th>Title</th>" +        
+                "</tr>" +
+              "</thead><tbody>"
+              var classes = JSON.parse(userStorage.getItem("classes"));
+            for (var n = 0; n < classes.length; n++)
+            {
+              
+              switch(classes[n])
+              {
+              
+                case 1:
+                //BASIC Programming TR
+                 table += "<tr><td>18047</td><td>Intro. to BASIC Programming</td></tr>";
+                  crnString = crnString.concat("18047 ,");
+                  break;
+                
+                case 2:
+                  //Programming Principles I Section A TR F
+                  table += "<tr><td>14264</td><td>Programming Principles I</td></tr>";
+                  crnString = crnString.concat("14264 ,");
+                  break;
+                
+                case 3:
+                  //Programming Principles I Section B TR F
+                  table += "<tr><td>14265</td><td>Programming Principles I</td></tr>";
+                 crnString = crnString.concat("14265 ,");
+                  break;
+                case 4:
+                  //Programming Principles I Section C MW F
+                  table += "<tr><td>17696</td><td>Programming Principles I</td></tr>";
+            
+                  crnString = crnString.concat("17696 ,");
+                  break;
+                case 5:
+                  //Programming Principles II Section B MW
+                  table += "<tr><td>10186</td><td>Programming Principles II</td></tr>";
+                  crnString = crnString.concat("10186 ,");
+            
+                  break;
+                case 6:
+                  //Computers, Ethics, and Society MW
+                  table += "<tr><td>10187</td><td>Computers, Ethics and Soc</td></tr>";
+                  crnString = crnString.concat("10187 ,");
+            
+                  break;
+                case 7:
+                  //Data Structures TR
+                  table += "<tr><td>11065</td><td>Data Structures</td></tr>";
+                  crnString = crnString.concat("11065 ,");
+            
+                  break;
+                case 8:
+                  //online
+                  break;
+                case 9:
+                  //Systems Software TR
+                  table += "<tr><td>13388</td><td>Systems Software</td></tr>";
+                  crnString = crnString.concat("13388 ,");
+
+                  break;
+                case 10:
+                  //Theoretical Foundations TR
+                  table += "<tr><td>12326</td><td>Theoretical Foundations</td></tr>";
+                  crnString = crnString.concat("12326 ,");
+            
+                  break;
+                case 11:
+                  //Database Systems MW
+                  table += "<tr><td>18681</td><td>Database Systems</td></tr>";
+                  crnString = crnString.concat("18681 ,");
+            
+                  break;
+                case 12:
+                  //Intro to Machine Learing MW
+                  table += "<tr><td>18045</td><td>Intro to Machine Learning</td></tr>";
+                  crnString = crnString.concat("18045 ,");
+
+                  break;
+                  
+                case 13:
+                  //Algorithms
+                  table += "<tr><td>11470</td><td>Algo Design and Analysis</td></tr>";
+                  crnString = crnString.concat("11470 ,");
+                    
+                  break;
+                  
+                case 14:
+                  //Computer Architecture T/TR   T
+                  table += "<tr><td>12493</td><td>Computer Architecture</td></tr>";
+                  crnString = crnString.concat("12493 ,");
+
+                  break;
+                case 15:
+                  //Data Comm TR
+                  table += "<tr><td>11067</td><td>Data Comm and Networking</td></tr>";
+                  crnString = crnString.concat("11067 ,");
+
+                  break;
+                case 16:
+                  //Object Oriented TR
+                  table += "<tr><td>13389</td><td>Object-Oriented Design</td></tr>";
+                 crnString = crnString.concat("13389 ,");
+            
+                  break;
+                case 17:
+                  //Computer Security MW R
+                  table += "<tr><td>14531</td><td>Computer Security</td></tr>";
+                  crnString = crnString.concat("14531 ,");
+            
+                  break;
+                case 18:
+                  //Software Engineering TR
+                  table += "<tr><td>11068</td><td>Software Engineering</td></tr>";
+                  crnString = crnString.concat("11068 ,");
+            
+                  break;
+                case 19:
+                  //Systems and Software Assurance MW
+                  table += "<tr><td>16128</td><td>Systems and Software Assurance</td></tr>";
+                 crnString = crnString.concat("16128 ,");
+            
+                  break;
+                
+                case 20:
+                  //ST: Machine Learning
+                  //online
+
+                  break;
+                  
+                case 25:
+                  //Distributed Web Systems Design MW
+                  table += "<tr><td>18121</td><td>Distributed Web Systems Design</td></tr>";
+                  crnString = crnString.concat("18121 ,");
+            
+                  break;
+                
+                case 26:
+                  //Computer Graphics MW
+                  table += "<tr><td>15406</td><td>Computer Graphics</td></tr>";
+                  crnString = crnString.concat("15406 ,");
+
+                  break;
+              
+                case 23:
+                  //Data Warehousing
+                  //Online
+                  break;
+                case 24:
+                  //Programming Principles II Section A TR
+                  table += "<tr><td>10185</td><td>Programming Principles II</td></tr>";
+                  crnString = crnString.concat("10185 ,");
+            
+                  break;
+              }
+              
+            }
+            table += "</tbody></table>";
+            tbl.innerHTML = table;
+
+
+            </script>
+          </div>
+            <div class="input-group">
+              <input id="CRNexport" type="text" class="form-control" placeholder="Course CRNs...">
+              <span class="input-group-btn">
+                  <button id="copyBtn" class="btn btn-primary" type="button">Copy to Clipboard <i class="fa fa-fw fa-copy"></i></button>
+              </span>
+              </div><!-- /input-group -->
+              <br>
+      </div>
+    </div>
+
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small></small>
+        </div>
+      </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      //var test = "12493 , 11067 , 13389 , 15406";
+      document.getElementById("CRNexport").value = crnString;
+
+
+      var btnCopy = document.getElementById("copyBtn");
+      btnCopy.addEventListener("click", function(event) {
+        var copyTextarea = document.getElementById("CRNexport");
+        copyTextarea.select();
+        try {
+          var successful = document.execCommand('copy');
+          var msg = successful ? 'successful' : 'unsuccessful';
+          console.log('Copying text command was ' + msg);
+          } catch (err) {
+            console.log('Oops, unable to copy');
+          }
+      });
+      
+
+
+    </script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="js/sb-admin-datatables.min.js"></script>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>CS / Schedule Express</title>
+  <!-- Bootstrap core CSS-->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Page level plugin CSS-->
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet">
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.html">CS / Schedule Express</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="coursesearch.html">
+            <i class="fa fa-fw fa-list-alt"></i>
+            <span class="nav-link-text">Schedule Builder</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="schedule.html">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">Overview/View Schedule</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="export.html">
+            <i class="fa fa-fw fa-list"></i>
+            <span class="nav-link-text">Easy Export</span>
+          </a>
+        </li>
+        
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      
+    </div>
+  </nav>
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      
+      <!-- Example DataTables Card-->
+      <div class="card mb-3">
+        <div class="card-header">
+          <H4><i class="fa fa-list-alt"></i> Current Courses Available</H4></div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Course</th>
+                  <th>Title</th>
+                  <th>Time</th>
+                  <th>Days</th>
+                  <th>Instructor</th>
+                  <th>Add</th>
+                  
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                 <th>Course</th>
+                  <th>Title</th>
+                  <th>Time</th>
+                  <th>Days</th>
+                  <th>Instructor</th>
+                  <th>Add</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr>
+                  <td>CSCI 1230 A</td>
+                  <td>Intro. to BASIC Programming</td>
+                  <td>9:30a-10:45a</td>
+                  <td>TR</td>
+                  <td>STAFF</td>
+                  <td><button type="button" id="classBtn1" onclick="addClass(1)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 1301 A</td>
+                  <td>Programming Principles I</td>
+                  <td>11:00a-2:00p</td>
+                  <td>TRF</td>
+                  <td>WenRan Zhang</td>
+                  <td><button type="button" id="classBtn2" onclick="addClass(2)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 1301 B</td>
+                  <td>Programming Principles I</td>
+                  <td>8:00a-2:00p</td>
+                  <td>TRF</td>
+                  <td>STAFF</td>
+                  <td><button type="button" id="classBtn3" onclick="addClass(3)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 1301 C</td>
+                  <td>Programming Principles I</td>
+                  <td>9:05a-10:20p</td>
+                  <td>MWF</td>
+                  <td>Lixin Li</td>
+                  <td><button type="button" id="classBtn4" onclick="addClass(4)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 1302 A</td>
+                  <td>Programming Principles II</td>
+                  <td>2:00p-3:15p</td>
+                  <td>TR</td>
+                  <td>Mehdi Allahyari</td>
+                  <td><button type="button" id="classBtn24" onclick="addClass(24)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 1302 B</td>
+                  <td>Programming Principles II</td>
+                  <td>4:00p-5:15p</td>
+                  <td>MW</td>
+                  <td>Andrew Allen</td>
+                  <td><button type="button" id="classBtn5" onclick="addClass(5)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 2120 A</td>
+                  <td>Computer, Ethics & Society</td>
+                  <td>11:15a-12:05a</td>
+                  <td>MW</td>
+                  <td>James Harris</td>
+                  <td><button type="button" id="classBtn6" onclick="addClass(6)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 3230 A</td>
+                  <td>Data Structures</td>
+                  <td>3:30p-4:45p</td>
+                  <td>TR</td>
+                  <td>Weitian Tong</td>
+                  <td><button type="button" id="classBtn7" onclick="addClass(7)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 3232 01F</td>
+                  <td>System Software (Prov. MSCS)</td>
+                  <td>11:00a-2:00p</td>
+                  <td>Onl.</td>
+                  <td>WenRan Zhang</td>
+                  <td><button type="button" id="classBtn8" onclick="addClass(8)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 3232 A</td>
+                  <td>System Software</td>
+                  <td>12:30p-1:45p</td>
+                  <td>TR</td>
+                  <td>Kai Wang</td>
+                  <td><button type="button" id="classBtn9" onclick="addClass(9)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 3236 A</td>
+                  <td>Theoretical Foundations</td>
+                  <td>11:00a-12:15p</td>
+                  <td>TR</td>
+                  <td>Lixin Li</td>
+                  <td><button type="button" id="classBtn10" onclick="addClass(10)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 3432 A</td>
+                  <td>Database Systems</td>
+                  <td>2:30a-3:45p</td>
+                  <td>MW</td>
+                  <td>Vladan Jovanovic</td>
+                  <td><button type="button" id="classBtn11" onclick="addClass(11)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 5090 A</td>
+                  <td>ST: Intro to Machine Learning</td>
+                  <td>9:05a-10:20a</td>
+                  <td>MW</td>
+                  <td>Mehdi Allahyari</td>
+                  <td><button type="button" id="classBtn12" onclick="addClass(12)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 5330 A</td>
+                  <td>Algo Design & Analysis</td>
+                  <td>11:00a-12:20a</td>
+                  <td>TR</td>
+                  <td>Muralidhar Medidi</td>
+                  <td><button type="button" id="classBtn13" onclick="addClass(13)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 5331</td>
+                  <td>Computer Architecture</td>
+                  <td>8:00a-12:20a</td>
+                  <td>TRT</td>
+                  <td>Pradipta De</td>
+                  <td><button type="button" id="classBtn14" onclick="addClass(14)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 5332</td>
+                  <td>Data Comm & Networking</td>
+                  <td>9:30a-10:45a</td>
+                  <td>TR</td>
+                  <td>Pradipta De</td>
+                  <td><button type="button" id="classBtn15" onclick="addClass(15)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 5335 A</td>
+                  <td>Object-Oriented Design</td>
+                  <td>2:00p-3:15p</td>
+                  <td>TR</td>
+                  <td>WenRan Zhang</td>
+                  <td><button type="button" id="classBtn16" onclick="addClass(16)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 5431 A</td>
+                  <td>Computer Security</td>
+                  <td>1:25p-2:15p</td>
+                  <td>MWR</td>
+                  <td>James Harris</td>
+                  <td><button type="button" id="classBtn17" onclick="addClass(17)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 5436 A</td>
+                  <td>Distributed Web Systems Design</td>
+                  <td>4:00p-5:15p</td>
+                  <td>MW</td>
+                  <td>WenRan Zhang</td>
+                  <td><button type="button" id="classBtn25" onclick="addClass(25)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 5437 A</td>
+                  <td>Computer Graphics</td>
+                  <td>2:30p-3:45p</td>
+                  <td>MW</td>
+                  <td>Weitian Tong</td>
+                  <td><button type="button" id="classBtn26" onclick="addClass(26)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 5530 A</td>
+                  <td>Software Enginnering</td>
+                  <td>3:30-4:45p</td>
+                  <td>TR</td>
+                  <td>Andrew Allen</td>
+                  <td><button type="button" id="classBtn18" onclick="addClass(18)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 5331 A</td>
+                  <td>Systems & Software Assurance</td>
+                  <td>11:15a-12:30a</td>
+                  <td>MW</td>
+                  <td>Jovanovic Vladan</td>
+                  <td><button type="button" id="classBtn19" onclick="addClass(19)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 7090</td>
+                  <td>ST: Machine Learning</td>
+                  <td>Online</td>
+                  <td>Onl.</td>
+                  <td>Mehdi Allahyari</td>
+                  <td><button type="button" id="classBtn20" onclick="addClass(20)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 7431</td>
+                  <td>Distributed Database Systems</td>
+                  <td>Online</td>
+                  <td>Onl.</td>
+                  <td>Lixin Li</td>
+                  <td><button type="button" id="classBtn21" onclick="addClass(21)" class="btn btn-success">Add</button></td>
+                </tr>
+                <tr>
+                  <td>CSCI 7431</td>
+                  <td>Data Warehousing</td>
+                  <td>Online</td>
+                  <td>Onl.</td>
+                  <td>Vladan Jovanovic</td>
+                  <td><button type="button" id="classBtn23" onclick="addClass(23)" class="btn btn-success">Add</button></td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM from GSU Course Search</div>
+      </div>
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small></small>
+        </div>
+      </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      userStorage = window.localStorage;
+	  
+      var classes = JSON.parse(userStorage.getItem("classes"));
+	  for (var n = 0; n < classes.length; n++)
+		{
+			
+			var id = classes[n];
+			var x = document.getElementById("classBtn"+id);
+			x.innerHTML = "Remove";
+			x.setAttribute("class", "btn btn-danger");
+			
+		}		
+      
+      
+      function addClass(i) 
+      {
+        var x = document.getElementById("classBtn"+i);
+        
+		if (x.innerHTML == "Add") {
+		
+			x.innerHTML = "Remove";
+			x.setAttribute("class", "btn btn-danger");
+			if (storageAvailable('localStorage')) {
+          var classes = JSON.parse(userStorage.getItem("classes"));
+          if (classes == null) 
+          {
+            classes = new Array();
+            classes.push(i);
+            userStorage.setItem("classes", JSON.stringify(classes));
+            console.log(userStorage.classes);
+          } else
+          {
+            classes.push(i);
+            userStorage.setItem("classes", JSON.stringify(classes));
+            console.log(userStorage.classes);
+          }
+          
+        }
+        else {
+          window.alert("localStorage not available, Schedule Builder will not work for you!");
+        }
+			
+		
+		} else {
+		
+			x.innerHTML = "Add";
+			x.setAttribute("class", "btn btn-success");
+			if (storageAvailable('localStorage')) {
+				var classes = JSON.parse(userStorage.getItem("classes"));
+          if (classes == null) 
+          {
+            classes = new Array();
+            var index = classes.indexOf(i);
+			classes.splice(index, 1);
+            userStorage.setItem("classes", JSON.stringify(classes));
+            console.log(userStorage.classes);
+          } else
+          {
+            var index = classes.indexOf(i);
+			classes.splice(index, 1);
+            userStorage.setItem("classes", JSON.stringify(classes));
+            console.log(userStorage.classes);
+          }
+          
+        }
+        else {
+          window.alert("localStorage not available, Schedule Builder will not work for you!");
+        }
+		}
+		  
+      }
+      function storageAvailable(type) {
+        try {
+          var storage = window[type],
+          x = '__storage_test__';
+          storage.setItem(x, x);
+          storage.removeItem(x);
+          return true;
+        }
+        catch(e) {
+            return e instanceof DOMException && (
+              // everything except Firefox
+              e.code === 22 ||
+              // Firefox
+              e.code === 1014 ||
+              // test name field too, because code might not be present
+              // everything except Firefox
+              e.name === 'QuotaExceededError' ||
+              // Firefox
+              e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+              // acknowledge QuotaExceededError only if there's something already stored
+              storage.length !== 0;
+        }
+    }
+	
+    </script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="js/sb-admin-datatables.min.js"></script>
+  </div>
+</body>
+
+</html>

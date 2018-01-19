@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+<html lang="en" ng-app="starter">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>CS / Schedule Express</title>
+  <!-- Bootstrap core CSS-->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Page level plugin CSS
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">-->
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet">
+  <!--<link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">-->
+  <link href="css/snip.css" rel="stylesheet">
+    <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+
+	
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top" >
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.html">CS / Schedule Express</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="coursesearch.html">
+            <i class="fa fa-fw fa-list-alt"></i>
+            <span class="nav-link-text">Schedule Builder</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="schedule.html">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">Overview/View Schedule</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="export.html">
+            <i class="fa fa-fw fa-list"></i>
+            <span class="nav-link-text">Easy Export</span>
+          </a>
+        </li>
+        
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      <!--<ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        </li>
+      </ul>-->
+    </div>
+  </nav>
+  <div class="content-wrapper">
+    <div class="container-fluid" ng-controller="MyCtrl">
+           
+      
+      <ion-pane >
+        <ion-header-bar class="bar-dark" style="background-color:#009d97">
+            <h4 class="title">Current Schedule</h4>
+        </ion-header-bar>
+
+
+        <div id="gridHeader" class="grid-header"  ng-style="{'overflow': 'false', 'width' : (200 * rooms.length + 60) + 'px', 'left':'-'+timerleft}">
+           <div class="grid-header-clock" style="left: 0px;">
+        
+            </div>
+            <!--<div class="grid-header-labels" ng-repeat="room in rooms">
+                <div class="grid-header-label">{{room.name}}
+                    <div class="grid-header-label-divider"></div>
+                </div>
+
+            </div>-->
+            
+        </div>
+        <ion-content scroll="true" direction="y"  has-bouncing="false"  on-scroll="gotScrolled()">
+            <div id="gridBody" class="grid-body ui-block"  >
+                <div style="position:relative" ng-repeat="day in days">
+                    <div id="gridTimesHolder" class="grid-times-holder" ng-style="{'left':timerleft}" >
+                        <div class="day-label">{{day.day.substr(0, 3)}}</div>  
+                        <div class="grid-times" ng-repeat="hour in hours">
+                            <div class="grid-time-label">{{hour}}</div> 
+                        </div>
+                    </div>
+                    <div class="grid-sessions" ng-style="{'height' : (50 * hours.length + 24) + 'px'}">
+                        <div class="grid-sessions-day" ng-style="{'overflow': 'true', 'width' : (130 * rooms.length + 60) + 'px'}"
+                             >
+                            <div ng-repeat="event in events| filter:{ dateformat: day.dateformat}">
+                                <div class="grid-session-cell" ng-style="{'top':event.top, 'left':event.left, 'height':event.height, 'background-color':event.color}">
+                                    <i class="icon  grid-session-icon" ng-class="event.eventtype"></i>
+                                    <div class="grid-session-title">{{event.eventname}}</div>
+                                    <div class="grid-session-time">{{event.starthour}}-{{event.endhour}}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+
+                </div>
+
+            </div>
+
+
+
+        </ion-content>
+    </ion-pane>
+      
+      
+      </div>
+    </div>
+
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small></small>
+        </div>
+      </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="js/sb-admin-datatables.min.js"></script>
+    <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script>
+    
+angular.module('starter', ['ionic'])
+
+        .run(function ($ionicPlatform) {
+            $ionicPlatform.ready(function () {
+               
+                if (window.cordova && window.cordova.plugins.Keyboard) {
+                    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                }
+                if (window.StatusBar) {
+                    StatusBar.styleDefault();
+                }
+
+            });
+        })
+		
+		
+		
+        .controller('MyCtrl', function ($scope, $ionicScrollDelegate) {
+
+            userStorage = window.localStorage;
+	  
+			var classes = JSON.parse(userStorage.getItem("classes"));
+			  
+			
+			
+			var startHour = 7;
+            var endHour = 21;
+            var usehalfhour = true;
+            var StandardHour = 7;
+
+            $scope.timerleft = '0px';
+
+            $scope.hours = getHours();
+            $scope.rooms = getRooms();
+            $scope.days = getDays();
+            $scope.events = getEvents();
+
+            function getHours()
+            {
+                var tmp = [];
+                for (i = startHour; i <= endHour; i++)
+                {
+
+                    tmp.push(('0' + i).slice(-2) + ':00');
+                    if (usehalfhour && i < endHour)
+                    {
+                        tmp.push(('0' + i).slice(-2) + ':30');
+                    }
+                }
+
+                return tmp;
+            }
+            ;
+
+
+            function getRooms()
+            {
+                var tmp = [];
+                tmp.push({id: 1, name: 'Monday'});
+                tmp.push({id: 2, name: 'Tuesday'});
+                tmp.push({id: 3, name: 'Wednesday'});
+                tmp.push({id: 4, name: 'Thursday'});
+                tmp.push({id: 5, name: 'Friday'});
+
+                return tmp;
+            }
+            ;
+            function getDays()
+            {
+                var tmp = [];
+                var date1 = new Date();
+                var date2 = new Date();
+                date2.setDate(date2.getDate() + 1);
+                var weekday = new Array(7);
+                weekday[0] = "";
+                weekday[1] = "";
+                weekday[2] = "";
+                weekday[3] = "";
+                weekday[4] = "";
+                weekday[5] = "";
+                weekday[6] = "";
+
+                var monthname = new Array(12);
+                monthname[0] = "January";
+                monthname[1] = "February";
+                monthname[2] = "March";
+                monthname[3] = "April";
+                monthname[4] = "May";
+                monthname[5] = "June";
+                monthname[6] = "July";
+                monthname[7] = "August";
+                monthname[8] = "September";
+                monthname[9] = "October";
+                monthname[10] = "November";
+                monthname[11] = "December";
+
+
+                tmp.push({day: weekday[date1.getDay()], longdate: weekday[date1.getDay()] + ', ' + monthname[date1.getMonth()] + ' ' + date1.getDate() + ', ' + date1.getFullYear(), datevalue: date1, dateformat: date1.toLocaleDateString()});
+                /*tmp.push({day: weekday[date2.getDay()], longdate: weekday[date2.getDay()] + ', ' + monthname[date2.getMonth()] + ' ' + date2.getDate() + ', ' + date2.getFullYear(), datevalue: date2, dateformat: date2.toLocaleDateString()});*/
+                console.log(tmp);
+                return tmp;
+            }
+
+            $scope.gotScrolled = function () {
+
+                $scope.timerleft = $ionicScrollDelegate.getScrollPosition().left + 'px';
+                $scope.$apply();
+
+            };
+
+            function getEvents() {
+                var tmp = [];
+                var date1 = new Date();
+
+                //Days of the week header
+                tmp.push({eventname: 'Monday', starthour: '22:00', endhour: '23:00', eventtype: 'ion-wineglass', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 0 * 100) + 'px', height: (.5 * 100) + 'px', color: 'rgba(52,58,64,0.75)', dateformat: date1.toLocaleDateString()});
+                tmp.push({eventname: 'Tuesday', starthour: '22:00', endhour: '23:00', eventtype: 'ion-wineglass', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 0 * 100) + 'px', height: (.5 * 100) + 'px', color: 'rgba(52,58,64,0.75)', dateformat: date1.toLocaleDateString()});
+                tmp.push({eventname: 'Wednesday', starthour: '22:00', endhour: '23:00', eventtype: 'ion-wineglass', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 0 * 100) + 'px', height: (.5 * 100) + 'px', color: 'rgba(52,58,64,0.75)', dateformat: date1.toLocaleDateString()});
+                tmp.push({eventname: 'Thursday', starthour: '22:00', endhour: '23:00', eventtype: 'ion-wineglass', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 0 * 100) + 'px', height: (.5 * 100) + 'px', color: 'rgba(52,58,64,0.75)', dateformat: date1.toLocaleDateString()});
+                tmp.push({eventname: 'Friday', starthour: '22:00', endhour: '23:00', eventtype: 'ion-wineglass', room: 'Morpheus', left: (60 + 4 * 120) + 'px', top: (23 + 0 * 100) + 'px', height: (.5 * 100) + 'px', color: 'rgba(52,58,64,0.75)', dateformat: date1.toLocaleDateString()});
+				
+
+
+                
+				for (var n = 0; n < classes.length; n++)
+				{
+					
+					switch(classes[n])
+					{
+						case 26:
+							//Computer Graphics
+							tmp.push({eventname: 'Computer Graphics', starthour: '2:30', endhour: '3:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 7.5 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(255,0,0,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Computer Graphics', starthour: '2:30', endhour: '3:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 7.5 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(255,0,0,0.75)', dateformat: date1.toLocaleDateString()});
+							break;
+							
+							
+							
+						case 1:
+						//BASIC Programming TR
+							tmp.push({eventname: 'BASIC Programming', starthour: '9:30', endhour: '10:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 2.5 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(0,157,101,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'BASIC Programming', starthour: '9:30', endhour: '10:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 2.5 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(0,157,101,0.75)', dateformat: date1.toLocaleDateString()});
+							break;
+						
+						case 2:
+							//Programming Principles I Section A TR F
+							//TR
+							tmp.push({eventname: 'Programming Principles I A', starthour: '11:00', endhour: '12:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 4 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(128,173,218,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Programming Principles I A', starthour: '11:00', endhour: '12:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 4 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(128,173,218,0.75)', dateformat: date1.toLocaleDateString()});
+							// F
+							tmp.push({eventname: 'Programming Principles I A', starthour: '2:00', endhour: '3:50', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 4 * 120) + 'px', top: (23 + 7 * 100) + 'px', height: (1.85 * 100) + 'px', color: 'rgba(128,173,218,0.75)', dateformat: date1.toLocaleDateString()});
+							break;
+						
+						case 3:
+							//Programming Principles I Section B TR F
+							//TR
+							tmp.push({eventname: 'Programming Principles I B', starthour: '8:00', endhour: '9:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 1 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(128,218,173,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Programming Principles I B', starthour: '8:00', endhour: '9:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 1 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(128,218,173,0.75)', dateformat: date1.toLocaleDateString()});
+							// F
+							tmp.push({eventname: 'Programming Principles I B', starthour: '2:00', endhour: '3:50', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 4 * 120) + 'px', top: (23 + 7 * 100) + 'px', height: (1.85 * 100) + 'px', color: 'rgba(128,218,173,0.75)', dateformat: date1.toLocaleDateString()});
+							break;
+						case 4:
+							//Programming Principles I Section C MW F
+				
+							//MW
+							tmp.push({eventname: 'Programming Principles I C', starthour: '9:05', endhour: '10:20', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 2.0833 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(173,15,173,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Programming Principles I C', starthour: '9:05', endhour: '10:20', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 2.0833 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(173,15,173,0.75)', dateformat: date1.toLocaleDateString()});
+							//F
+							tmp.push({eventname: 'Programming Principles I C', starthour: '2:00', endhour: '3:50', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 4 * 120) + 'px', top: (23 + 7 * 100) + 'px', height: (1.85 * 100) + 'px', color: 'rgba(173,15,173,0.75)', dateformat: date1.toLocaleDateString()});
+							break;
+						case 5:
+							//Programming Principles II Section B MW
+							tmp.push({eventname: 'Programming Principles II B', starthour: '4:00', endhour: '5:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 9 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(52,135,52,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Programming Principles II B', starthour: '4:00', endhour: '5:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 9 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(52,135,52,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+						case 6:
+							//Computers, Ethics, and Society MW
+							tmp.push({eventname: 'Computer Ethics', starthour: '11:15', endhour: '12:05', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 4.25 * 100) + 'px', height: (.90 * 100) + 'px', color: 'rgba(135,52,52,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Computer Ethics', starthour: '11:15', endhour: '12:05', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 4.25 * 100) + 'px', height: (.90 * 100) + 'px', color: 'rgba(135,52,52,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+						case 7:
+							//Data Structures TR
+							tmp.push({eventname: 'Data Structures', starthour: '3:30', endhour: '4:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 8.5 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(233,130,26,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Data Structures', starthour: '3:30', endhour: '4:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 8.5 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(233,130,26,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+						case 8:
+							//online
+							break;
+						case 9:
+							//Systems Software TR
+							tmp.push({eventname: 'Systems Software', starthour: '12:30', endhour: '1:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 5.5 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(239,30,239,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Systems Software', starthour: '12:30', endhour: '1:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 5.5 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(239,30,239,0.75)', dateformat: date1.toLocaleDateString()});
+
+							break;
+						case 10:
+							//Theoretical Foundations TR
+							tmp.push({eventname: 'Theoretical Foundations', starthour: '11:00', endhour: '12:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 4 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(66,203,66,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Theoretical Foundations', starthour: '11:00', endhour: '12:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 4 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(66,203,66,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+						case 11:
+							//Database Systems MW
+							tmp.push({eventname: 'Database Systems', starthour: '2:30', endhour: '3:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 7.5 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(239,30,20,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Database Systems', starthour: '2:30', endhour: '3:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 7.5 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(239,30,20,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+						case 12:
+							//Intro to Machine Learing MW
+							tmp.push({eventname: 'Intro to Machine Learning', starthour: '9:05', endhour: '10:20', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 2.0833 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(0,157,151,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Intro to Machine Learning', starthour: '9:05', endhour: '10:20', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 2.0833 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(0,157,151,0.75)', dateformat: date1.toLocaleDateString()});
+
+							break;
+							
+						case 13:
+							//Algorithms
+							tmp.push({eventname: 'Algo Design & Analysis', starthour: '11:00', endhour: '12:20', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 4 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(135,30,239,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Algo Design & Analysis', starthour: '11:00', endhour: '12:20', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 4 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(135,30,239,0.75)', dateformat: date1.toLocaleDateString()});
+								
+							break;
+							
+						case 14:
+							//Computer Architecture T/TR   T
+							//TR
+							tmp.push({eventname: 'Computer Architecture', starthour: '8:00', endhour: '8:50', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 1 * 100) + 'px', height: (0.9 * 100) + 'px', color: 'rgba(18,67,172,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Computer Architecture', starthour: '8:00', endhour: '8:50', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 1 * 100) + 'px', height: (0.9 * 100) + 'px', color: 'rgba(18,67,172,0.75)', dateformat: date1.toLocaleDateString()});
+							//T
+							tmp.push({eventname: 'Computer Architecture', starthour: '5:00', endhour: '6:50', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 10 * 100) + 'px', height: (1.8 * 100) + 'px', color: 'rgba(18,67,172,0.75)', dateformat: date1.toLocaleDateString()});
+
+							break;
+						case 15:
+							//Data Comm TR
+							tmp.push({eventname: 'Data Comm & Networking', starthour: '9:30', endhour: '10:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 2.5 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(0,157,101,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Data Comm & Networking', starthour: '9:30', endhour: '10:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 2.5 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(0,157,101,0.75)', dateformat: date1.toLocaleDateString()});
+
+							break;
+						case 16:
+							//Object Oriented TR
+							tmp.push({eventname: 'Object-Oriented Design', starthour: '2:00', endhour: '3:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 7 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(30,135,239,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Object-Oriented Design', starthour: '2:00', endhour: '3:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 7 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(30,135,239,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+						case 17:
+							//Computer Security MW R
+							//MW
+							tmp.push({eventname: 'Computer Security', starthour: '1:25', endhour: '2:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 6.25 * 100) + 'px', height: (1.05 * 100) + 'px', color: 'rgba(239,30,30,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Computer Security', starthour: '1:25', endhour: '2:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 6.25 * 100) + 'px', height: (1.05 * 100) + 'px', color: 'rgba(239,30,30,0.75)', dateformat: date1.toLocaleDateString()});
+							//R
+							tmp.push({eventname: 'Computer Security', starthour: '5:00', endhour: '6:50', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 10 * 100) + 'px', height: (1.85 * 100) + 'px', color: 'rgba(239,30,30,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+						case 18:
+							//Software Engineering TR
+							tmp.push({eventname: 'Software Engineering', starthour: '3:30', endhour: '4:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 8.5 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(26,177,26,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Software Engineering', starthour: '3:30', endhour: '4:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 8.5 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(26,177,26,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+						case 19:
+							//Systems and Software Assurance MW
+							tmp.push({eventname: 'Systems and Software Assurance', starthour: '11:15', endhour: '12:30', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 4.25 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(239,30,239,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Systems and Software Assurance', starthour: '11:15', endhour: '12:30', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 4.25 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(239,30,239,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+						
+						case 20:
+							//ST: Machine Learning
+							//online
+							break;
+							
+						case 25:
+							//Distributed Web Systems Design MW
+							tmp.push({eventname: 'Distributed Web Systems Design', starthour: '4:00', endhour: '5:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 9 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(30,135,239,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Distributed Web Systems Design', starthour: '4:00', endhour: '5:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 9 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(255,150,0,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+						
+						case 26:
+							//Computer Graphics MW
+							tmp.push({eventname: 'Computer Graphics', starthour: '2:30', endhour: '3:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 0 * 120) + 'px', top: (23 + 7.5 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(255,0,0,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Computer Graphics', starthour: '2:30', endhour: '3:45', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 2 * 120) + 'px', top: (23 + 7.5 * 100) + 'px', height: (1.35 * 100) + 'px', color: 'rgba(255,0,0,0.75)', dateformat: date1.toLocaleDateString()});
+
+							break;
+					
+						case 23:
+							//Data Warehousing
+							//Online
+							break;
+						case 24:
+							//Programming Principles II Section A TR
+							tmp.push({eventname: 'Programming Principles II A', starthour: '2:00', endhour: '3:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 1 * 120) + 'px', top: (23 + 7 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(15,173,173,0.75)', dateformat: date1.toLocaleDateString()});
+							tmp.push({eventname: 'Programming Principles II A', starthour: '2:00', endhour: '3:15', eventtype: 'ion-mic-c', room: 'Morpheus', left: (60 + 3 * 120) + 'px', top: (23 + 7 * 100) + 'px', height: (1.25 * 100) + 'px', color: 'rgba(15,173,173,0.75)', dateformat: date1.toLocaleDateString()});
+				
+							break;
+					}
+					
+					
+					
+				}
+				
+
+
+				
+				
+
+                return tmp;
+            }
+            ;
+				
+        });
+
+</script>
+    
+  </div>
+</body>
+
+</html>
